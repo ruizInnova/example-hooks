@@ -30,6 +30,24 @@ export const TodoApp = () => {
         localStorage.setItem('todos', JSON.stringify(todos));
     }, [todos])
 
+    const handleDelete = (todoId) => {
+        console.log(todoId);
+        const action = {
+            type: 'delete',
+            payload: todoId
+
+        }
+        dispatch( action );
+        reset();
+    }
+
+    const handleToggle = (todoId) => {
+        dispatch({
+            type: 'toggle',
+            payload: todoId
+        });
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('new task..');
@@ -41,7 +59,7 @@ export const TodoApp = () => {
             id: new Date().getTime(),
             desc: description,
             done: false
-        }
+        }   
 
         const action = {
             type: 'add',
@@ -86,8 +104,13 @@ export const TodoApp = () => {
                                 key = { todo.id }
                                 className="list-group-item"
                                 >
+                                <p
+                                    className={ `${ todo.done && 'complete' }` }
+                                    onClick = { () =>handleToggle(todo.id) }
+                                >
                                     { i + 1 }.- { todo.desc }
-                                <button type="button" className="btn btn-danger delete"><i className="bi bi-trash"></i></button>
+                                </p>
+                                <button onClick={ () =>handleDelete(todo.id) } type="button" className="btn btn-danger delete"><i className="bi bi-trash"></i></button>
                                 </li>
 
                         ))
