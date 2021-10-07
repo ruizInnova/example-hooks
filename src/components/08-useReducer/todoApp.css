@@ -4,10 +4,18 @@ body {
     padding: 2rem;
 }
 
-.delete{
-    margin-left: 5rem;
+p {
+    cursor:pointer;
+    margin: 0px;
 }
 
 .complete{
     text-decoration: line-through;
+}
+
+.list-group-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
 }

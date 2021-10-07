@@ -80,13 +80,13 @@ export const TodoApp = () => {
                     <hr/>
                     <form onSubmit = {handleSubmit} >
                         <div className="mb-3">
-                            <label for="exampleInputEmail1" className="form-label">Pending task</label>
+                            <label className="form-label">Pending task</label>
                             <input
                                 type="text"
                                 className="form-control"
                                 name="description"
                                 placeholder="Activity ..."
-                                autocomplete="off"
+                                autoComplete="off"
                                 onChange={handleInputChange}
                                 value={description}
                             />
@@ -110,7 +110,7 @@ export const TodoApp = () => {
                                 >
                                     { i + 1 }.- { todo.desc }
                                 </p>
-                                <button onClick={ () =>handleDelete(todo.id) } type="button" className="btn btn-danger delete"><i className="bi bi-trash"></i></button>
+                                <button onClick={ () =>handleDelete(todo.id) } type="button" className="btn btn-danger"><i className="bi bi-trash"></i></button>
                                 </li>
 
                         ))
