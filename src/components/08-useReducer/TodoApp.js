@@ -1,18 +1,13 @@
 import React, { useReducer, useEffect } from 'react';
 import { todoReducer } from './todoReducer';
-import { useForm } from '../../hooks/useForm';
+
+import { TodoAdd } from './components/TodoAdd';
 import { TodoList } from './components/TodoList';
+
 import './todoApp.css';
 
 const init = () => {
     return JSON.parse(localStorage.getItem('todos')) || [];
-    /*
-    return [{
-        id: new Date().getTime(),
-        desc: 'Aprender React',
-        done: false
-    }];
-    */
 }
 
 // create Array 
@@ -22,9 +17,7 @@ export const TodoApp = () => {
 
     const [todos, dispatch] = useReducer(todoReducer, initialState, init);
 
-    const [{description}, handleInputChange, reset] = useForm( {
-        description: ''
-    })
+    
     //console.log(formValues);
 
     useEffect(() => {
@@ -39,7 +32,6 @@ export const TodoApp = () => {
 
         }
         dispatch( action );
-        reset();
     }
 
     const handleToggle = (todoId) => {
@@ -49,27 +41,11 @@ export const TodoApp = () => {
         });
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('new task..');
-        if(description.trim().length <= 4){
-            return;
-        }
-
-        const newTodo = {
-            id: new Date().getTime(),
-            desc: description,
-            done: false
-        }   
-
-        const action = {
+    const handleAddTodo = (newTodo) => { 
+        dispatch( {
             type: 'add',
             payload: newTodo
-
-        }
-
-        dispatch( action );
-        reset();
+        } );
 
     }
 
@@ -79,26 +55,9 @@ export const TodoApp = () => {
                 <div className="col-md-auto">
                     <h1>Todo-App ({todos.length})</h1>
                     <hr/>
-                    <form onSubmit = {handleSubmit} >
-                        <div className="mb-3">
-                            <label className="form-label">Pending task</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                name="description"
-                                placeholder="Activity ..."
-                                autoComplete="off"
-                                onChange={handleInputChange}
-                                value={description}
-                            />
-                            
-                            <div id="emailHelp" className="form-text">Write the task you will be working with</div>
-                            
-                            
-                        </div>
-                    </form>
+                    <TodoAdd handleAddTodo= {handleAddTodo} />
 
-                   <TodoList 
+                    <TodoList 
                             todos = { todos }
                             handleDelete = { handleDelete }
                             handleToggle = { handleToggle }
